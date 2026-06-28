@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ble/ble_service.dart';
+import '../services/ble_service.dart';
 import 'config_page.dart';
 
 class HomePage extends StatefulWidget {
