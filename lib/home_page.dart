@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ble/ble_service.dart';
+import 'config_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,6 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
 
   final BleService bleService = BleService();
 
@@ -55,10 +57,12 @@ class _HomePageState extends State<HomePage> {
                 estado = "Buscando barreras...";
                 });
 
-                final dispositivos = await bleService.scanDevices();
+                bool conectado = await bleService.connectToBarrier();
 
                 setState(() {
-                estado = "Encontradas ${dispositivos.length} barreras";
+                estado = conectado
+                    ? "Conectado a Barrera"
+                    : "Barrera no encontrada";
                 });
 
             },
@@ -70,10 +74,18 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 15),
 
             ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.wifi),
-              label: const Text("Configurar WiFi"),
+            onPressed: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ConfigPage(),
+                ),
+                );
+            },
+            icon: const Icon(Icons.wifi),
+            label: const Text("Configurar WiFi"),
             ),
+
 
             const SizedBox(height: 15),
 
